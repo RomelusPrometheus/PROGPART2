@@ -1,0 +1,37 @@
+@model ContractMonthlyClaimSystem.Models.Claim
+@{
+    ViewData["Title"] = "Submit Claim";
+}
+
+<h2>Submit Monthly Claim</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+        <label asp-for="HoursWorked" class="form-label"></label>
+        <input asp-for="HoursWorked" class="form-control" />
+        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="HourlyRate" class="form-label"></label>
+        <input asp-for="HourlyRate" class="form-control" />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label"></label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Supporting Document (.pdf, .docx, .xlsx)</label>
+        <input type="file" name="document" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Submit Claim</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

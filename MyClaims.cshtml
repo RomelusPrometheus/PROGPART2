@@ -1,0 +1,41 @@
+@model IEnumerable<ContractMonthlyClaimSystem.Models.Claim>
+@{
+    ViewData["Title"] = "My Claims";
+}
+
+<h2>My Claims</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date Submitted</th>
+            <th>Hours</th>
+            <th>Rate</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Document</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var c in Model)
+    {
+        <tr>
+            <td>@c.DateSubmitted.ToLocalTime()</td>
+            <td>@c.HoursWorked</td>
+            <td>@c.HourlyRate</td>
+            <td>@c.TotalAmount</td>
+            <td>
+                @if (c.Status == "Pending") { <span class="badge bg-warning text-dark">Pending</span> }
+                else if (c.Status == "Approved") { <span class="badge bg-success">Approved</span> }
+                else if (c.Status == "Rejected") { <span class="badge bg-danger">Rejected</span> }
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(c.DocumentPath))
+                {
+                    <a asp-action="Download" asp-route-id="@c.ClaimId">Download</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
